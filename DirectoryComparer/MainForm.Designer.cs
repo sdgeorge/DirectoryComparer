@@ -31,17 +31,27 @@
             this.DirectoriesLabel = new System.Windows.Forms.Label();
             this.DirectoriesTextBox = new System.Windows.Forms.TextBox();
             this.MainProgressBar = new System.Windows.Forms.ProgressBar();
-            this.label2 = new System.Windows.Forms.Label();
+            this.FilesLabel = new System.Windows.Forms.Label();
             this.BrowseButton = new System.Windows.Forms.Button();
-            this.MainDataGridView = new System.Windows.Forms.DataGridView();
             this.StartButton = new System.Windows.Forms.Button();
+            this.MainStatusStrip = new System.Windows.Forms.StatusStrip();
+            this.TopMenuStrip = new System.Windows.Forms.MenuStrip();
+            this.ToolStripFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripSaveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.MainSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.MainDataGridView = new System.Windows.Forms.DataGridView();
+            this.TopMenuStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MainSplitContainer)).BeginInit();
+            this.MainSplitContainer.Panel1.SuspendLayout();
+            this.MainSplitContainer.Panel2.SuspendLayout();
+            this.MainSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // DirectoriesLabel
             // 
             this.DirectoriesLabel.AutoSize = true;
-            this.DirectoriesLabel.Location = new System.Drawing.Point(12, 9);
+            this.DirectoriesLabel.Location = new System.Drawing.Point(3, 9);
             this.DirectoriesLabel.Name = "DirectoriesLabel";
             this.DirectoriesLabel.Size = new System.Drawing.Size(174, 20);
             this.DirectoriesLabel.TabIndex = 0;
@@ -49,41 +59,116 @@
             // 
             // DirectoriesTextBox
             // 
-            this.DirectoriesTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.DirectoriesTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.DirectoriesTextBox.Location = new System.Drawing.Point(12, 32);
+            this.DirectoriesTextBox.Location = new System.Drawing.Point(3, 32);
             this.DirectoriesTextBox.Multiline = true;
             this.DirectoriesTextBox.Name = "DirectoriesTextBox";
-            this.DirectoriesTextBox.Size = new System.Drawing.Size(358, 100);
+            this.DirectoriesTextBox.Size = new System.Drawing.Size(352, 104);
             this.DirectoriesTextBox.TabIndex = 1;
             // 
             // MainProgressBar
             // 
             this.MainProgressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.MainProgressBar.Location = new System.Drawing.Point(12, 412);
+            this.MainProgressBar.Location = new System.Drawing.Point(12, 399);
             this.MainProgressBar.Name = "MainProgressBar";
             this.MainProgressBar.Size = new System.Drawing.Size(458, 29);
             this.MainProgressBar.TabIndex = 2;
             // 
-            // label2
+            // FilesLabel
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 144);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(38, 20);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Files";
+            this.FilesLabel.AutoSize = true;
+            this.FilesLabel.Location = new System.Drawing.Point(3, 9);
+            this.FilesLabel.Name = "FilesLabel";
+            this.FilesLabel.Size = new System.Drawing.Size(38, 20);
+            this.FilesLabel.TabIndex = 3;
+            this.FilesLabel.Text = "Files";
             // 
             // BrowseButton
             // 
             this.BrowseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BrowseButton.Location = new System.Drawing.Point(376, 32);
+            this.BrowseButton.Location = new System.Drawing.Point(361, 32);
             this.BrowseButton.Name = "BrowseButton";
             this.BrowseButton.Size = new System.Drawing.Size(94, 29);
             this.BrowseButton.TabIndex = 4;
             this.BrowseButton.Text = "Browse";
             this.BrowseButton.UseVisualStyleBackColor = true;
+            // 
+            // StartButton
+            // 
+            this.StartButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.StartButton.Location = new System.Drawing.Point(361, 107);
+            this.StartButton.Name = "StartButton";
+            this.StartButton.Size = new System.Drawing.Size(94, 29);
+            this.StartButton.TabIndex = 4;
+            this.StartButton.Text = "Analyse";
+            this.StartButton.UseVisualStyleBackColor = true;
+            // 
+            // MainStatusStrip
+            // 
+            this.MainStatusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.MainStatusStrip.Location = new System.Drawing.Point(0, 431);
+            this.MainStatusStrip.Name = "MainStatusStrip";
+            this.MainStatusStrip.Size = new System.Drawing.Size(482, 22);
+            this.MainStatusStrip.TabIndex = 6;
+            // 
+            // TopMenuStrip
+            // 
+            this.TopMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.TopMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripFileMenuItem});
+            this.TopMenuStrip.Location = new System.Drawing.Point(0, 0);
+            this.TopMenuStrip.Name = "TopMenuStrip";
+            this.TopMenuStrip.Size = new System.Drawing.Size(482, 28);
+            this.TopMenuStrip.TabIndex = 7;
+            // 
+            // ToolStripFileMenuItem
+            // 
+            this.ToolStripFileMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripSaveMenuItem});
+            this.ToolStripFileMenuItem.Name = "ToolStripFileMenuItem";
+            this.ToolStripFileMenuItem.Size = new System.Drawing.Size(46, 24);
+            this.ToolStripFileMenuItem.Text = "File";
+            // 
+            // ToolStripSaveMenuItem
+            // 
+            this.ToolStripSaveMenuItem.Name = "ToolStripSaveMenuItem";
+            this.ToolStripSaveMenuItem.Size = new System.Drawing.Size(123, 26);
+            this.ToolStripSaveMenuItem.Text = "Save";
+            // 
+            // MainSplitContainer
+            // 
+            this.MainSplitContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.MainSplitContainer.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.MainSplitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.MainSplitContainer.Location = new System.Drawing.Point(12, 31);
+            this.MainSplitContainer.Name = "MainSplitContainer";
+            this.MainSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // MainSplitContainer.Panel1
+            // 
+            this.MainSplitContainer.Panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.MainSplitContainer.Panel1.Controls.Add(this.DirectoriesLabel);
+            this.MainSplitContainer.Panel1.Controls.Add(this.DirectoriesTextBox);
+            this.MainSplitContainer.Panel1.Controls.Add(this.BrowseButton);
+            this.MainSplitContainer.Panel1.Controls.Add(this.StartButton);
+            this.MainSplitContainer.Panel1MinSize = 50;
+            // 
+            // MainSplitContainer.Panel2
+            // 
+            this.MainSplitContainer.Panel2.BackColor = System.Drawing.SystemColors.Control;
+            this.MainSplitContainer.Panel2.Controls.Add(this.MainDataGridView);
+            this.MainSplitContainer.Panel2.Controls.Add(this.FilesLabel);
+            this.MainSplitContainer.Panel2MinSize = 50;
+            this.MainSplitContainer.Size = new System.Drawing.Size(458, 362);
+            this.MainSplitContainer.SplitterDistance = 150;
+            this.MainSplitContainer.SplitterWidth = 10;
+            this.MainSplitContainer.TabIndex = 8;
+            this.MainSplitContainer.Text = "splitContainer1";
             // 
             // MainDataGridView
             // 
@@ -91,38 +176,33 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.MainDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.MainDataGridView.Location = new System.Drawing.Point(12, 167);
+            this.MainDataGridView.Location = new System.Drawing.Point(3, 32);
             this.MainDataGridView.Name = "MainDataGridView";
             this.MainDataGridView.RowHeadersWidth = 51;
             this.MainDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.MainDataGridView.Size = new System.Drawing.Size(458, 239);
+            this.MainDataGridView.Size = new System.Drawing.Size(452, 154);
             this.MainDataGridView.TabIndex = 5;
             this.MainDataGridView.Text = "dataGridView1";
-            // 
-            // StartButton
-            // 
-            this.StartButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.StartButton.Location = new System.Drawing.Point(376, 103);
-            this.StartButton.Name = "StartButton";
-            this.StartButton.Size = new System.Drawing.Size(94, 29);
-            this.StartButton.TabIndex = 4;
-            this.StartButton.Text = "Analyse";
-            this.StartButton.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(482, 453);
-            this.Controls.Add(this.StartButton);
-            this.Controls.Add(this.MainDataGridView);
-            this.Controls.Add(this.BrowseButton);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.MainSplitContainer);
+            this.Controls.Add(this.MainStatusStrip);
+            this.Controls.Add(this.TopMenuStrip);
             this.Controls.Add(this.MainProgressBar);
-            this.Controls.Add(this.DirectoriesTextBox);
-            this.Controls.Add(this.DirectoriesLabel);
             this.Name = "MainForm";
             this.Text = "Directory Comparer";
+            this.TopMenuStrip.ResumeLayout(false);
+            this.TopMenuStrip.PerformLayout();
+            this.MainSplitContainer.Panel1.ResumeLayout(false);
+            this.MainSplitContainer.Panel1.PerformLayout();
+            this.MainSplitContainer.Panel2.ResumeLayout(false);
+            this.MainSplitContainer.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MainSplitContainer)).EndInit();
+            this.MainSplitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.MainDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -134,10 +214,15 @@
         private System.Windows.Forms.Label DirectoriesLabel;
         private System.Windows.Forms.TextBox DirectoriesTextBox;
         private System.Windows.Forms.ProgressBar MainProgressBar;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label FilesLabel;
         private System.Windows.Forms.Button BrowseButton;
-        private System.Windows.Forms.DataGridView MainDataGridView;
         private System.Windows.Forms.Button StartButton;
+        private System.Windows.Forms.StatusStrip MainStatusStrip;
+        private System.Windows.Forms.MenuStrip TopMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripFileMenuItem;
+        private System.Windows.Forms.SplitContainer MainSplitContainer;
+        private System.Windows.Forms.DataGridView MainDataGridView;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripSaveMenuItem;
     }
 }
 

@@ -12,6 +12,9 @@ namespace DirectoryComparer
 {
     public partial class MainForm : Form
     {
+
+        // Option to delete all matching files within a path or all other files
+
         public MainForm()
         {
             InitializeComponent();
