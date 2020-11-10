@@ -1,4 +1,6 @@
-﻿namespace DirectoryComparer
+﻿using DirectoryComparer.Renderers;
+
+namespace DirectoryComparer
 {
     partial class MainForm
     {
@@ -35,11 +37,13 @@
             this.BrowseButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
             this.MainStatusStrip = new System.Windows.Forms.StatusStrip();
+            this.ToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.TopMenuStrip = new System.Windows.Forms.MenuStrip();
             this.ToolStripFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripSaveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.MainDataGridView = new System.Windows.Forms.DataGridView();
+            this.MainStatusStrip.SuspendLayout();
             this.TopMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainSplitContainer)).BeginInit();
             this.MainSplitContainer.Panel1.SuspendLayout();
@@ -95,6 +99,7 @@
             this.BrowseButton.TabIndex = 4;
             this.BrowseButton.Text = "Browse";
             this.BrowseButton.UseVisualStyleBackColor = true;
+            this.BrowseButton.Click += new System.EventHandler(this.BrowseButton_Click);
             // 
             // StartButton
             // 
@@ -105,14 +110,24 @@
             this.StartButton.TabIndex = 4;
             this.StartButton.Text = "Analyse";
             this.StartButton.UseVisualStyleBackColor = true;
+            this.StartButton.Click += new System.EventHandler(this.StartButton_Click);
             // 
             // MainStatusStrip
             // 
             this.MainStatusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.MainStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripStatusLabel});
             this.MainStatusStrip.Location = new System.Drawing.Point(0, 431);
             this.MainStatusStrip.Name = "MainStatusStrip";
             this.MainStatusStrip.Size = new System.Drawing.Size(482, 22);
             this.MainStatusStrip.TabIndex = 6;
+            this.MainStatusStrip.Renderer = new ToolStripLabelRenderer();
+            // 
+            // ToolStripStatusLabel
+            // 
+            this.ToolStripStatusLabel.Name = "ToolStripStatusLabel";
+            this.ToolStripStatusLabel.Size = new System.Drawing.Size(0, 16);
+            this.ToolStripStatusLabel.Spring = true;
             // 
             // TopMenuStrip
             // 
@@ -180,7 +195,7 @@
             this.MainDataGridView.Name = "MainDataGridView";
             this.MainDataGridView.RowHeadersWidth = 51;
             this.MainDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.MainDataGridView.Size = new System.Drawing.Size(452, 154);
+            this.MainDataGridView.Size = new System.Drawing.Size(452, 149);
             this.MainDataGridView.TabIndex = 5;
             this.MainDataGridView.Text = "dataGridView1";
             // 
@@ -195,6 +210,8 @@
             this.Controls.Add(this.MainProgressBar);
             this.Name = "MainForm";
             this.Text = "Directory Comparer";
+            this.MainStatusStrip.ResumeLayout(false);
+            this.MainStatusStrip.PerformLayout();
             this.TopMenuStrip.ResumeLayout(false);
             this.TopMenuStrip.PerformLayout();
             this.MainSplitContainer.Panel1.ResumeLayout(false);
@@ -223,6 +240,7 @@
         private System.Windows.Forms.SplitContainer MainSplitContainer;
         private System.Windows.Forms.DataGridView MainDataGridView;
         private System.Windows.Forms.ToolStripMenuItem ToolStripSaveMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel ToolStripStatusLabel;
     }
 }
 
