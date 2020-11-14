@@ -121,12 +121,11 @@ namespace DirectoryComparer
             this.MainStatusStrip.Name = "MainStatusStrip";
             this.MainStatusStrip.Size = new System.Drawing.Size(482, 22);
             this.MainStatusStrip.TabIndex = 6;
-            this.MainStatusStrip.Renderer = new ToolStripLabelRenderer();
             // 
             // ToolStripStatusLabel
             // 
             this.ToolStripStatusLabel.Name = "ToolStripStatusLabel";
-            this.ToolStripStatusLabel.Size = new System.Drawing.Size(0, 16);
+            this.ToolStripStatusLabel.Size = new System.Drawing.Size(467, 16);
             this.ToolStripStatusLabel.Spring = true;
             // 
             // TopMenuStrip
@@ -190,12 +189,13 @@ namespace DirectoryComparer
             this.MainDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.MainDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.MainDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.MainDataGridView.Location = new System.Drawing.Point(3, 32);
             this.MainDataGridView.Name = "MainDataGridView";
             this.MainDataGridView.RowHeadersWidth = 51;
             this.MainDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.MainDataGridView.Size = new System.Drawing.Size(452, 149);
+            this.MainDataGridView.Size = new System.Drawing.Size(452, 137);
             this.MainDataGridView.TabIndex = 5;
             this.MainDataGridView.Text = "dataGridView1";
             // 
@@ -208,6 +208,7 @@ namespace DirectoryComparer
             this.Controls.Add(this.MainStatusStrip);
             this.Controls.Add(this.TopMenuStrip);
             this.Controls.Add(this.MainProgressBar);
+            this.MinimumSize = new System.Drawing.Size(500, 500);
             this.Name = "MainForm";
             this.Text = "Directory Comparer";
             this.MainStatusStrip.ResumeLayout(false);
