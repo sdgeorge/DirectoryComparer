@@ -1,4 +1,5 @@
 ﻿using DirectoryComparer.Components;
+using DirectoryComparer.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,7 +16,10 @@ namespace DirectoryComparer
     public partial class MainForm : Form
     {
 
-        // Option to delete all matching files within a path or all other files
+        // Option to delete all matching files under a path or all other files
+
+        // 1.   Enumerate files in the given directories
+        // 2.   Determine the required properties about each file
 
         public MainForm()
         {
@@ -72,9 +76,35 @@ namespace DirectoryComparer
             }
         }
 
-        private void StartButton_Click(object sender, EventArgs e)
-        {
+        // if modified < created - then the file is very old and likely a copy so can be deleted
 
+        private async void StartButton_Click(object sender, EventArgs e)
+        {
+            StartButton.Enabled = false;
+
+            try {
+                var directories = DirectoriesTextBox.Lines.ToList();
+
+                await FolderWalker.WalkAsync(directories);
+
+                var files = await FolderWalker.GetFileDetailsAsync();
+
+                var table = await FolderWalker.GetTableAsync(files);
+
+                MainDataGridView.DataSource = table;
+                MainDataGridView.Refresh();
+            }
+            catch (Exception ex)
+            {
+                ToolStripStatusLabel.Text = $"Processing error: {ex.Message}";
+            }
+            StartButton.Enabled = true;
         }
+
+        // TODO - Pop-up for selecting folder paths from toolbar rather than main form
+        
+        // TODO - Display file size as actual
+        
+        // TODO - Colour following matching rows in red
     }
 }
