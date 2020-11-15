@@ -55,6 +55,7 @@ namespace DirectoryComparer.Models
 
         public override string ToString() => Name;
 
+        // TODO - Tidy this
         public string GetSize()
         {
             string[] suf = { "B", "KB", "MB", "GB", "TB", "PB", "EB" }; //Longs run out around EB
@@ -65,7 +66,7 @@ namespace DirectoryComparer.Models
 
             int order = Convert.ToInt32(Math.Floor(Math.Log(bytes, 1024)));
             double num = Math.Round(bytes / Math.Pow(1024, order), 2);
-            return (Math.Sign(bytes) * num).ToString() + suf[order];
+            return (Math.Sign(bytes) * num).ToString() + " " + suf[order];
 
             // Adjust the format string to your preferences. For example "{0:0.#}{1}" would
             // show a single decimal place, and no space.
