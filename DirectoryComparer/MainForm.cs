@@ -15,18 +15,78 @@ namespace DirectoryComparer
 {
     public partial class MainForm : Form
     {
+        FolderWalker Walker;
 
-        // Option to delete all matching files under a path or all other files
+        public enum MessageState
+        {
+            OK,
+            Info,
+            Success,
+            Warning,
+            Error
+        }
 
-        // 1.   Enumerate files in the given directories
-        // 2.   Determine the required properties about each file
+        // TODO - Option to delete all matching files under a path or all other files
 
         public MainForm()
         {
             InitializeComponent();
+
+            Walker = new FolderWalker();
+            Walker.ReportPeriodMs = 200;
+            Walker.OnError += this.OnError;
+            Walker.OnEstimate += this.OnEstimation;
+
+            MainProgressBar.Maximum = 1000;
+            MainProgressBar.Step = 1;
+            MainProgressBar.Value = 0;
+            MainProgressBar.Text = "Waiting";
         }
 
+        public static Color GetColor(MessageState state)
+        {
+            switch (state)
+            {
+                case MessageState.OK:       return Color.Black;
+                case MessageState.Info:     return Color.Blue;
+                case MessageState.Success:  return Color.Green;
+                case MessageState.Warning:  return Color.Orange;
+                case MessageState.Error:    return Color.Red;
+            }
+            return Color.Black;
+        }
 
+        // Running on the UI thread
+        private void SetStatus(string text, MessageState state = MessageState.OK)
+        {
+            Invoke((MethodInvoker)delegate {
+                ToolStripStatusLabel.Text = text;
+                ToolStripStatusLabel.ForeColor = GetColor(state);
+            });
+        }
+
+        private void OnError(object sender, Models.ErrorEventArgs args) 
+            => SetStatus($"{args.Message} - {args.Error.Message}", MessageState.Error);
+
+        // args.Elapsed.ToString("c") args.End.ToShortTimeString()
+        private void OnEstimation(object sender, EstimateEventArgs args)
+        {
+            if (args.Source != null) {
+                if (args.Source is FileDetails) {
+                    var details = (FileDetails)args.Source;
+
+                    SetStatus(details.RelativePath, MessageState.OK);
+                }
+            }
+
+            Invoke((MethodInvoker)delegate {
+                MainProgressBar.Maximum = args.Total;
+                MainProgressBar.Value = args.Counter > MainProgressBar.Maximum ? MainProgressBar.Maximum : args.Counter;
+                //MainProgressBar.Value = (int)(args.Percentage * 100);
+                MainProgressBar.Refresh();
+            });
+        }
+        
         private string[] RemoveInvalidFolders(string[] paths)
         {
             var validPaths = new List<string>();
