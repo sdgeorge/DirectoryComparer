@@ -140,14 +140,13 @@ namespace DirectoryComparer.Models
             //.OrderByDescending(list => list.Count);
 
             return detailsList.SelectMany(list => list).ToList();
-
             //return DetailsDictionary.SelectMany(kvp => kvp.Value, (pair, details) => pair.Key, tuple.).ToList();
         }
 
-        public static async Task<DataTable> GetTableAsync(List<FileDetails> files)
-            => await Task.Run(() => { return GetTable(files); });
-        
-        public static DataTable GetTable(List<FileDetails> files)
+        public Task<List<FileDetails>> GetFileDetailsAsync()
+            => Task.Run(() => GetFileDetails());
+
+        public DataTable GetTable(List<FileDetails> files)
         {
             var table = new DataTable();
             table.Columns.Add("Name", typeof(string));
@@ -180,5 +179,63 @@ namespace DirectoryComparer.Models
             }
             return table;
         }
+
+        public Task<DataTable> GetTableAsync(List<FileDetails> files)
+            => Task.Run(() => GetTable(files));
+
+        public int GetFileCount(string folder)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(folder)) return 0;
+                if (!Directory.Exists(folder)) return 0;
+                // TODO - Fails on 'My Music' folder
+                return Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories).Count();
+            }
+            catch (Exception ex)
+            {
+                ReportError(ex, $"File count failed: {folder}");
+            }
+            return 0;
+        }
+
+        public int GetFileCount(List<string> folders)
+        {
+            int fileCount = 0;
+            foreach (var folder in folders)
+                fileCount += GetFileCount(folder);
+            return fileCount;
+        }
+
+        public Task<int> GetFileCountAsync(List<string> folders)
+            => Task.Run(() => GetFileCount(folders));
+
+        public int GetFileCountSafe(string folder)
+        {
+            int fileCount = 0;
+
+            if (string.IsNullOrWhiteSpace(folder)) return 0;
+            if (!Directory.Exists(folder)) return 0;
+
+            fileCount += Directory.EnumerateFiles(folder, "*", SearchOption.TopDirectoryOnly).Count();
+
+            foreach (var dir in Directory.EnumerateDirectories(folder, "*", SearchOption.TopDirectoryOnly))
+                try { fileCount += GetFileCountSafe(folder); }
+                catch (Exception ex)
+                { ReportError(ex, $"File count failed: {folder}"); }
+
+            return fileCount;
+        }
+
+        public int GetFileCountSafe(List<string> folders)
+        {
+            int fileCount = 0;
+            foreach (var folder in folders)
+                fileCount += GetFileCountSafe(folder);
+            return fileCount;
+        }
+
+        public Task<int> GetFileCountSafeAsync(List<string> folders)
+            => Task.Run(() => GetFileCountSafe(folders));
     }
 }
