@@ -1,30 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace DirectoryComparer.Models
 {
-    public static class FolderWalker
+    public class FolderWalker
     {
-        private static List<string> FolderBlacklist = new List<string> { ".git", ".vs", "node_modules" };
+        // Specify directory names to ignore, such as node_modules - these will waste time parsing, just option to delete?
+        private static List<string> FolderBlacklist = new List<string> { ".git", ".vs", "node_modules", "bower_components" };
 
         private static List<string> ExtensionBlacklist = new List<string> { ".log", ".tlog", ".gitignore" };
 
-        private static Dictionary<string, List<FileDetails>> DetailsDictionary;
+        private Dictionary<string, List<FileDetails>> DetailsDictionary;
 
-        private static string LastFolder;
+        private string LastFolder;
 
-        // TODO - Return events for each file added, including details read to handle progress
+        // Make these readable
+        private int TotalFiles;
 
-        // TODO - Specify directory names to ignore, such as node_modules - these will waste time parsing, just option to delete?
+        private int FileCounter;
 
-        // TODO - Specify cores for Parallel
+        // Merge all of these timer methods into a class which can be inherited by this
+        private Stopwatch Timer = null;
 
-        public static async Task WalkAsync(List<string> folders)
-            => await Task.Run(() => { Walk(folders); });
+        private long LastElapsedMs = 0;
+
+        public long ReportPeriodMs = 5000;
+
+        public EventHandler<ErrorEventArgs> OnError;
+        public EventHandler<EstimateEventArgs> OnEstimate;
+
+        private void StartTimer()
+        {
+            LastElapsedMs = 0;
+            Timer = Stopwatch.StartNew();
+        }
+
+        private void StopTimer() => Timer?.Stop();
+
+        private void ReportError(Exception error, string message, object source = null)
+            => OnError?.Invoke(null, new ErrorEventArgs(error, message, source));
         
         public static void Walk(List<string> folders)
         {

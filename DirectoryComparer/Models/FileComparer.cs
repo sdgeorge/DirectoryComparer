@@ -7,13 +7,14 @@ namespace DirectoryComparer.Models
     public static class FileComparer
     {
         //public static float Threshold;
-
+       
         public static string GetHashCode(string filepath)
         {
             string hash = null;
             if (File.Exists(filepath))
                 using (var stream = File.OpenRead(filepath))
-                    try { hash = GetSha256Hash(stream); } catch { }
+                    try { hash = GetSha256Hash(stream); } 
+                    catch { }
             return hash;
         }
 
