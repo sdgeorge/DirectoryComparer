@@ -185,16 +185,10 @@ namespace DirectoryComparer.Models
 
         public int GetFileCount(string folder)
         {
-            try {
-                if (string.IsNullOrWhiteSpace(folder)) return 0;
-                if (!Directory.Exists(folder)) return 0;
-                // TODO - Fails on 'My Music' folder
-                return Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories).Count();
-            }
-            catch (Exception ex)
-            { ReportError(ex, $"File count failed: {folder}"); }
-
-            return 0;
+            if (string.IsNullOrWhiteSpace(folder)) return 0;
+            if (!Directory.Exists(folder)) return 0;
+            // TODO - Fails on 'My Music' folder
+            return Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories).Count();
         }
 
         public int GetFileCount(List<string> folders)
