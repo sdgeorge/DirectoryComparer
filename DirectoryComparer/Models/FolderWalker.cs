@@ -106,17 +106,33 @@ namespace DirectoryComparer.Models
         }
 
 
+        public void Walk(List<string> folders)
+        {
+            StartTimer();
+            DetailsDictionary = new Dictionary<string, List<FileDetails>>();
+            
+            TotalFiles = GetFileCount(folders);
+            FileCounter = 0;
+
+            foreach (var folder in folders)
             {
-                Walk(directory);
+                try
+                {
+                    LastFolder = folder;
+                    Walk(folder);
+                }
+                catch (Exception ex) { ReportError(ex, $"Folder failed: {folder}"); }
             }
+            StopTimer();
+            LastFolder = null;
         }
 
-        public static async Task<List<FileDetails>> GetFileDetailsAsync()
-            => await Task.Run(() => { return GetFileDetails(); });
+        public Task WalkAsync(List<string> folders)
+            => Task.Run(() => Walk(folders));
 
         // TODO - Special sorting algorithm for weighting multiple files against file size
 
-        public static List<FileDetails> GetFileDetails()
+        public List<FileDetails> GetFileDetails()
         {
             var detailsList = DetailsDictionary.Select(kvp => kvp.Value)
                 .Where(list => list.Count > 1)
