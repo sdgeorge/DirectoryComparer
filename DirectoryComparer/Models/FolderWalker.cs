@@ -45,25 +45,14 @@ namespace DirectoryComparer.Models
         private void ReportError(Exception error, string message, object source = null)
             => OnError?.Invoke(null, new ErrorEventArgs(error, message, source));
         
-        public static void Walk(List<string> folders)
+        private void ReportEstimation(int total, int counter, object source = null, string message = null)
         {
-            try
-            {
-                DetailsDictionary = new Dictionary<string, List<FileDetails>>();
+            if (Timer == null) StartTimer();
+            long elapsedMs = Timer.ElapsedMilliseconds;
 
-                foreach (var folder in folders)
-                {
-                    LastFolder = folder;
-                    Walk(folder);
-                }
-                //Parallel.ForEach(folders, folder => {
-                //    LastFolder = folder;
-                //    Walk(folder); 
-                //});
-            }
-            catch (Exception ex)
-            {
-                // TODO - Report global error
+            if (elapsedMs - LastElapsedMs > ReportPeriodMs) {
+                OnEstimate?.Invoke(null, new EstimateEventArgs(total, counter, elapsedMs, source, message));
+                LastElapsedMs = elapsedMs;
             }
         }
 
