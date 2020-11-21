@@ -1,4 +1,5 @@
-﻿using DirectoryComparer.Renderers;
+﻿using DirectoryComparer.Components;
+using DirectoryComparer.Renderers;
 
 namespace DirectoryComparer
 {
@@ -32,7 +33,7 @@ namespace DirectoryComparer
         {
             this.DirectoriesLabel = new System.Windows.Forms.Label();
             this.DirectoriesTextBox = new System.Windows.Forms.TextBox();
-            this.MainProgressBar = new System.Windows.Forms.ProgressBar();
+            this.MainProgressBar = new InfoProgressBar();
             this.FilesLabel = new System.Windows.Forms.Label();
             this.BrowseButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
@@ -170,14 +171,14 @@ namespace DirectoryComparer
             this.MainSplitContainer.Panel1.Controls.Add(this.DirectoriesTextBox);
             this.MainSplitContainer.Panel1.Controls.Add(this.BrowseButton);
             this.MainSplitContainer.Panel1.Controls.Add(this.StartButton);
-            this.MainSplitContainer.Panel1MinSize = 50;
+            this.MainSplitContainer.Panel1MinSize = 150;
             // 
             // MainSplitContainer.Panel2
             // 
             this.MainSplitContainer.Panel2.BackColor = System.Drawing.SystemColors.Control;
             this.MainSplitContainer.Panel2.Controls.Add(this.MainDataGridView);
             this.MainSplitContainer.Panel2.Controls.Add(this.FilesLabel);
-            this.MainSplitContainer.Panel2MinSize = 50;
+            this.MainSplitContainer.Panel2MinSize = 150;
             this.MainSplitContainer.Size = new System.Drawing.Size(458, 362);
             this.MainSplitContainer.SplitterDistance = 150;
             this.MainSplitContainer.SplitterWidth = 10;
@@ -195,7 +196,7 @@ namespace DirectoryComparer
             this.MainDataGridView.Name = "MainDataGridView";
             this.MainDataGridView.RowHeadersWidth = 51;
             this.MainDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.MainDataGridView.Size = new System.Drawing.Size(452, 137);
+            this.MainDataGridView.Size = new System.Drawing.Size(452, 143);
             this.MainDataGridView.TabIndex = 5;
             this.MainDataGridView.Text = "dataGridView1";
             // 
@@ -231,7 +232,7 @@ namespace DirectoryComparer
 
         private System.Windows.Forms.Label DirectoriesLabel;
         private System.Windows.Forms.TextBox DirectoriesTextBox;
-        private System.Windows.Forms.ProgressBar MainProgressBar;
+        private InfoProgressBar MainProgressBar;
         private System.Windows.Forms.Label FilesLabel;
         private System.Windows.Forms.Button BrowseButton;
         private System.Windows.Forms.Button StartButton;
