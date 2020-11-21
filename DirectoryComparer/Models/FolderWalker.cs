@@ -56,43 +56,56 @@ namespace DirectoryComparer.Models
             }
         }
 
-        // Breadth first
-        public static void Walk(string folder)
-        {
-            string folderName = Path.GetFileName(folder);
+        // TODO - Report every file if desired, along with its FileDetails
 
-            if (FolderBlacklist.Contains(folderName)) return;
+        // TODO - Return events for each file added, including details read to handle progress
+
+        // Breadth first
+        private void Walk(string folder)
+        {
+            if (string.IsNullOrWhiteSpace(folder)) return;
 
             if (!Directory.Exists(folder)) return;
 
-            var files = Directory.EnumerateFiles(folder);
+            string folderName = Path.GetFileName(folder);
 
-            foreach (var file in files)
+            if (FolderBlacklist.Contains(folderName))
             {
-                try
-                {
-                    var details = new FileDetails(file, true, false);
+                FileCounter += GetFileCount(folder);
+                return;
+            }
+            //var options = new ParallelOptions() { MaxDegreeOfParallelism = Environment.ProcessorCount };
+            //Parallel.ForEach(files, options, file => 
 
+            foreach (var file in Directory.EnumerateFiles(folder, "*", SearchOption.TopDirectoryOnly)) 
+            {
+                ++FileCounter;
+
+                var details = new FileDetails(file, true, false);
+
+                try {
                     if (ExtensionBlacklist.Contains(details.Extension)) continue;
 
                     details.RelativePath = details.AbsolutePath.Substring(LastFolder.Length + 1);
                     details.GetHash();
 
                     if (!DetailsDictionary.ContainsKey(details.Hash))
-                    {
                         DetailsDictionary[details.Hash] = new List<FileDetails>();
-                    }
+                    
                     DetailsDictionary[details.Hash].Add(details);
                 }
                 catch (Exception ex)
                 {
-                    // TODO - Report error file
+                    ReportError(ex, $"File failed", details);
                 }
+                ReportEstimation(TotalFiles, FileCounter, details);
             }
 
-            var directories = Directory.EnumerateDirectories(folder);
+            foreach (var directory in Directory.EnumerateDirectories(folder, "*", SearchOption.TopDirectoryOnly))
+                Walk(directory);
+        }
 
-            foreach (var directory in directories)
+
             {
                 Walk(directory);
             }
