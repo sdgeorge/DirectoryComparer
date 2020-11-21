@@ -185,17 +185,15 @@ namespace DirectoryComparer.Models
 
         public int GetFileCount(string folder)
         {
-            try
-            {
+            try {
                 if (string.IsNullOrWhiteSpace(folder)) return 0;
                 if (!Directory.Exists(folder)) return 0;
                 // TODO - Fails on 'My Music' folder
                 return Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories).Count();
             }
             catch (Exception ex)
-            {
-                ReportError(ex, $"File count failed: {folder}");
-            }
+            { ReportError(ex, $"File count failed: {folder}"); }
+
             return 0;
         }
 
@@ -213,16 +211,18 @@ namespace DirectoryComparer.Models
         public int GetFileCountSafe(string folder)
         {
             int fileCount = 0;
+            try {
+                if (string.IsNullOrWhiteSpace(folder)) return 0;
+                if (!Directory.Exists(folder)) return 0;
 
-            if (string.IsNullOrWhiteSpace(folder)) return 0;
-            if (!Directory.Exists(folder)) return 0;
+                fileCount += Directory.EnumerateFiles(folder, "*", SearchOption.TopDirectoryOnly).Count();
 
-            fileCount += Directory.EnumerateFiles(folder, "*", SearchOption.TopDirectoryOnly).Count();
-
-            foreach (var dir in Directory.EnumerateDirectories(folder, "*", SearchOption.TopDirectoryOnly))
-                try { fileCount += GetFileCountSafe(folder); }
-                catch (Exception ex)
-                { ReportError(ex, $"File count failed: {folder}"); }
+                foreach (var dir in Directory.EnumerateDirectories(folder, "*", SearchOption.TopDirectoryOnly))
+                    try { fileCount += GetFileCount(folder); }
+                    catch { fileCount += GetFileCountSafe(folder); }
+            }
+            catch (Exception ex)
+            { ReportError(ex, $"Safe file count failed: {folder}"); }
 
             return fileCount;
         }
