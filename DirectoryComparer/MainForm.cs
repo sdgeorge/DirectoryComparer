@@ -98,11 +98,9 @@ namespace DirectoryComparer
             return validPaths.ToArray();
         }
 
-
         private void BrowseButton_Click(object sender, EventArgs e)
         {
-            try
-            {
+            try {
                 DirectoriesTextBox.Lines = RemoveInvalidFolders(DirectoriesTextBox.Lines);
 
                 var lines = DirectoriesTextBox.Lines;
@@ -132,39 +130,57 @@ namespace DirectoryComparer
             }
             catch (Exception ex)
             {
-                ToolStripStatusLabel.Text = $"Folder dialog error: {ex.Message}";
+                SetStatus($"Folder dialog error: {ex.Message}", MessageState.Error);
             }
         }
 
-        // if modified < created - then the file is very old and likely a copy so can be deleted
+        // TODO - if modified < created - then the file is very old and likely a copy so can be deleted
 
         private async void StartButton_Click(object sender, EventArgs e)
         {
             StartButton.Enabled = false;
 
+            MainProgressBar.Text = null;
+            MainProgressBar.Maximum = 1000;
+            MainProgressBar.Step = 1;
+            MainProgressBar.Value = 0;
+            MainProgressBar.Refresh();
+
             try {
-                var directories = DirectoriesTextBox.Lines.ToList();
+                var directories = DirectoriesTextBox.Lines.Where(line => !string.IsNullOrWhiteSpace(line)).ToList();
 
-                await FolderWalker.WalkAsync(directories);
+                var total = Walker.GetFileCountSafe(directories);
 
-                var files = await FolderWalker.GetFileDetailsAsync();
+                await Walker.WalkAsync(directories);
 
-                var table = await FolderWalker.GetTableAsync(files);
+                var files = await Walker.GetFileDetailsAsync();
+
+                var table = await Walker.GetTableAsync(files);
 
                 MainDataGridView.DataSource = table;
                 MainDataGridView.Refresh();
+
+                MainProgressBar.Value = MainProgressBar.Maximum;
             }
             catch (Exception ex)
             {
-                ToolStripStatusLabel.Text = $"Processing error: {ex.Message}";
+                SetStatus($"Processing error: {ex.Message}", MessageState.Error);
             }
             StartButton.Enabled = true;
         }
 
+        // TODO - Option to move common files to a single location and create a csv for restoring
+
+        // TODO - fix progress bar
+
+        // TODO - display table as it loads
+
+        // TODO - option to delete Debug or Release folders
+
         // TODO - Pop-up for selecting folder paths from toolbar rather than main form
         
-        // TODO - Display file size as actual
-        
         // TODO - Colour following matching rows in red
+
+        // TODO - report files in estimation
     }
 }
